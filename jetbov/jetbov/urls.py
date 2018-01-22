@@ -14,15 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from django.conf.urls import include, url
 
 from Fazenda.views import home
-from Fazenda.api.views import FazendaListAPI, ProprietarioListAPI
+from Fazenda.api.views import (
+	FazendaListAPI, 
+	ProprietarioListAPI,
+	FazendaDetailAPI,
+	ProprietarioDetailAPI,
+	FazendaDestroyAPI,
+	FazendaUpdateAPI,
+	FazendaCreateAPI,
+	)
 
 urlpatterns = [
 	path('', home, name='cliente_home'),
     path('admin/', admin.site.urls),
-    path('api/Fazenda/', FazendaListAPI.as_view(), name='Fazenda-api'),
-    path('api/Proprietario/', ProprietarioListAPI.as_view(), name='Proprietario-api'),
+    path('api/Fazenda/', FazendaListAPI.as_view(), name='Fazenda-api-list'),
+    path('api/Fazenda/create', FazendaCreateAPI.as_view(), name='Fazenda-api-create'),
+    path('api/Proprietario/', ProprietarioListAPI.as_view(), name='Proprietario-api-list'),
+    re_path(r'^api/Fazenda/(?P<token>\d+)/$', FazendaDetailAPI.as_view(), name='Fazenda-api-detail'),
+    re_path(r'^api/Fazenda/edit/(?P<token>\d+)/$', FazendaUpdateAPI.as_view(), name='Fazenda-api-edit'),
+    re_path(r'^api/Fazenda/delete/(?P<token>\d+)/$', FazendaDestroyAPI.as_view(), name='Fazenda-api-delete'),
+    # path('api/Proprietario/', ProprietarioListAPI.as_view(), name='Proprietario-api'),
 ]

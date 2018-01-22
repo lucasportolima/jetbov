@@ -17,10 +17,10 @@ class Animal(models.Model):
         verbose_name = u'Animal'
         verbose_name_plural = u'Animais'
 
-    codigo = models.CharField(verbose_name=u'Código do Animal', max_length=18, db_index=True, null=False, blank=False)
+    codigo = models.CharField(verbose_name=u'Código/Brinco do Animal', unique=True, max_length=18, db_index=True, null=False, blank=False)
     data_cadastro = models.DateField(verbose_name=u'Cadastro', default=datetime.date.today, )
-    peso = models.FloatField(null=True, blank=True, default=None)
-    idade = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    peso = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, )
+    idade = models.FloatField(null=True, blank=True, default=None, )
     sexo = models.CharField(verbose_name=u'Sexo', max_length=1, choices=SEXO_CHOICES, default=SEXO_MACHO, )
     descricao = models.CharField(verbose_name=u'Tipo ou Raça', max_length=100, )
     fazenda = models.ManyToManyField(Fazenda)
