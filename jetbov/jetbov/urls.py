@@ -14,10 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from Fazenda.views import home 
 from django.urls import path
+from django.conf.urls import include, url
+
+from Fazenda.views import home
+from Fazenda.api.views import FazendaListAPI, ProprietarioListAPI
 
 urlpatterns = [
 	path('', home, name='cliente_home'),
     path('admin/', admin.site.urls),
+    path('api/Fazenda/', FazendaListAPI.as_view(), name='Fazenda-api'),
+    path('api/Proprietario/', ProprietarioListAPI.as_view(), name='Proprietario-api'),
 ]
